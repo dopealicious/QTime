@@ -2,10 +2,11 @@
 Project PBO 2023
 
 Members:
-Anandi Neina Aeyska Mahdi
 
-Baiq Soraya Aprilia Monica
+- Anandi Neina Aeyska Mahdi
 
-Islam Anasta Irawan
+- Baiq Soraya Aprilia Monica
 
-Lalu Mischa Khalqin Adhiguna
+- Islam Anasta Irawan
+
+- Lalu Mischa Khalqin Adhiguna
