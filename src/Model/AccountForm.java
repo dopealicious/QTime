@@ -1,10 +1,7 @@
 package Model;
 
 import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import javax.swing.*;
 
 import View.ImagePanel;
@@ -12,18 +9,19 @@ import View.LoginPanel;
 import View.PanelSlide;
 import View.RegisterPanel;
 
-public class AccountForm extends JFrame{
+public class AccountForm extends JFrame {
     private LoginPanel loginPanel;
     private RegisterPanel registerPanel;
+    private JPanel imagepanel;
     private PanelSlide slide;
-    private ImagePanel imagepanel;
-
-    public AccountForm(){
+    
+    public AccountForm() {
         initComponents();
-        setIconImage();
         loginPanel = new LoginPanel();
         registerPanel = new RegisterPanel();
-
+        setIconImage();
+        
+        
         slide.setAnimate(15);
         slide.init(loginPanel,registerPanel);
         registerPanel.setVisible(false);
@@ -51,19 +49,19 @@ public class AccountForm extends JFrame{
                 adjustLayout();
             }
         });        
-
+        
     }
 
     private void adjustLayout() {
         int frameHeight = getHeight();
         loginPanel.adjustLayout(frameHeight);
         registerPanel.adjustLayout(frameHeight);
-    }    
-
+    }
+    
     private void setIconImage(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/Assets/qtime-logo.png")));
     }
-
+                    
     private void initComponents() {
         slide = new PanelSlide();
         imagepanel = new ImagePanel();
@@ -111,9 +109,8 @@ public class AccountForm extends JFrame{
         );
 
         pack();
-    }
-
+    }                      
     public static void main(String args[]) {
         new AccountForm().setVisible(true);
-    }         
+    }               
 }

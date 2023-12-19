@@ -1,13 +1,11 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import Controller.DatabaseHandler;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class RegisterPanel extends JPanel{
+public class RegisterPanel extends JPanel {
     private JLabel askLabel;
     private JPasswordField confirmpassField;
     private JLabel confirmpassLabel;
@@ -20,11 +18,11 @@ public class RegisterPanel extends JPanel{
     private JButton submitBtn;
     private JTextField usernameField;
     private JLabel usernameLabel;
-    
-    public RegisterPanel(){
+
+    public RegisterPanel() {
         initComponents();
     }
-
+    
     public void registerPanel(){
         usernameField.grabFocus();
     }
@@ -38,9 +36,9 @@ public class RegisterPanel extends JPanel{
     
     public void adjustLayout(int frameHeight){
         setSize(getWidth(),frameHeight);
-    } 
-
-    private void initComponents(){
+    }    
+                          
+    private void initComponents() {
         header = new JLabel();
         registerLabel = new JLabel();
         usernameLabel = new JLabel();
@@ -70,7 +68,8 @@ public class RegisterPanel extends JPanel{
 
         passwordLabel.setFont(new Font("Segoe UI Semibold", 0, 18)); // NOI18N
         passwordLabel.setText("Password");
-        
+
+
         showpass.setBackground(new Color(255, 255, 255));
         showpass.setText("Show Password");
         showpass.setToolTipText("");
@@ -84,6 +83,11 @@ public class RegisterPanel extends JPanel{
         submitBtn.setForeground(new Color(255, 255, 255));
         submitBtn.setText("Create Account");
         submitBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        submitBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                submitBtnActionPerformed(evt);
+            }
+        });
 
         askLabel.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
         askLabel.setText("already have account?");
@@ -150,8 +154,8 @@ public class RegisterPanel extends JPanel{
                     .addComponent(loginhereLabel))
                 .addContainerGap())
         );
-    }                      
-                                        
+    }
+
     public void showPassActionPerformed(ActionEvent e){
         if (showpass.isSelected()) {
             passField.setEchoChar((char)0);
@@ -165,6 +169,22 @@ public class RegisterPanel extends JPanel{
         showPassActionPerformed(evt);
     }                                        
 
-       
-}
+    private void submitBtnActionPerformed(ActionEvent evt) {
+        String username = usernameField.getText();
+        String password = new String(passField.getPassword());
+        String confirmPassword = new String(confirmpassField.getPassword());
 
+        if (username.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Field tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else if (username.isEmpty()) {
+             JOptionPane.showMessageDialog(null, "Username tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);           
+        }else if (password.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Password tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);          
+        }else if (confirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Confirm Password tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);            
+        }else{
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            databaseHandler.Register(username, password, confirmPassword);
+        }
+    }              
+}

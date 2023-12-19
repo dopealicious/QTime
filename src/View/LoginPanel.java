@@ -1,10 +1,11 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import Controller.DatabaseHandler;
+import Model.DashboardForm;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class LoginPanel extends JPanel {
     private JLabel askLabel;
@@ -17,11 +18,11 @@ public class LoginPanel extends JPanel {
     private JButton submitBtn;
     private JTextField usernameField;
     private JLabel usernameLabel;
-    
-    public LoginPanel(){
+
+    public LoginPanel() {
         initComponents();
     }
-
+    
     public void login(){
         usernameField.grabFocus();
     }
@@ -36,7 +37,7 @@ public class LoginPanel extends JPanel {
         setSize(getWidth(),frameHeight);
     }
 
-    private void initComponents(){
+    private void initComponents() {
         header = new JLabel();
         loginLabel = new JLabel();
         usernameLabel = new JLabel();
@@ -78,6 +79,11 @@ public class LoginPanel extends JPanel {
         submitBtn.setForeground(new Color(255, 255, 255));
         submitBtn.setText("Submit");
         submitBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        submitBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                submitBtnActionPerformed(evt);
+            }
+        });
 
         askLabel.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
         askLabel.setText("don't have an account ?");
@@ -136,7 +142,31 @@ public class LoginPanel extends JPanel {
                     .addComponent(regishereLabel))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
-    }                                                                                                    
+    }                                                              
+
+    private void submitBtnActionPerformed(ActionEvent evt) {
+        String username = usernameField.getText();
+        String password = String.valueOf(passField.getPassword());
+        
+        if (username.isEmpty() && password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Field tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Username tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Password tidak boleh kosong!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            DatabaseHandler databaseHandler = new DatabaseHandler();
+            int UserId = databaseHandler.Login(username, password);
+            if (UserId != 0) {
+                DashboardForm dashboardForm = new DashboardForm(username);
+                dashboardForm.setVisible(true);
+                
+                SwingUtilities.getWindowAncestor(this).dispose();
+            }else{
+                System.out.println("username is null");
+            }
+        }
+    }                                         
     public void showPassActionPerformed(ActionEvent e){
         if (showpass.isSelected()) {
             passField.setEchoChar((char)0);
@@ -147,6 +177,5 @@ public class LoginPanel extends JPanel {
     
     private void showpassActionPerformed(ActionEvent evt) {
         showPassActionPerformed(evt);
-    }
+    }                                                     
 }
-
