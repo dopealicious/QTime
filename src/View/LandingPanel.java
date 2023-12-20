@@ -2,12 +2,11 @@ package View;
 
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
 import Model.DashboardForm;
 import Model.LeaderboardForm;
 import Model.ProfileForm;
-
-import java.awt.*;
 
 public class LandingPanel extends JPanel {
     private String username;
@@ -34,14 +33,12 @@ public class LandingPanel extends JPanel {
         int labelWidth = profilelabel.getWidth();
         profilelabel.setLocation(frameWidth - labelWidth - 14, 14);
 
-        // Center welcomeLabel, jButton1, jButton2
         int centerX = frameWidth / 2;
         int centerY = frameHeight / 2 + 52;
         int labelX = centerX - welcomelabel.getWidth() / 2;
         int labelY = centerY - welcomelabel.getHeight() / 2 - 125;
         welcomelabel.setLocation(labelX, labelY);
 
-        // Setelah welcomelabel, beri jarak sebelum button1 dan button2
         int buttonSpacing = 60;
         int buttonWidth = startquizbtn.getWidth();
 
@@ -49,29 +46,20 @@ public class LandingPanel extends JPanel {
         int buttonY = centerY + 20;
         startquizbtn.setLocation(buttonX, buttonY);
 
-        // Beri jarak sebelum button2
         int button2X = centerX + buttonSpacing / 2;
         leaderboardbtn.setLocation(button2X, buttonY);
     }    
     
     private void setProfileImage(String imagePath) {
-        // Load the image
         ImageIcon originalIcon = new ImageIcon(getClass().getResource(imagePath));
         Image originalImage = originalIcon.getImage();
- 
-        // Get the size of the label
+
         int labelWidth = profilelabel.getWidth();
         int labelHeight = profilelabel.getHeight();
 
-        // Check if label size is non-zero
         if (labelWidth > 0 && labelHeight > 0) {
-            // Get the scaled instance of the image
             Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
-
-            // Create a new ImageIcon with the scaled image
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-            // Set the scaled image in the profilelabel
             profilelabel.setIcon(scaledIcon);
         } else {
             System.out.println("Label size is zero. Image not set.");
@@ -159,11 +147,9 @@ public class LandingPanel extends JPanel {
     }
 
     private void profilelabelMouseClicked(MouseEvent evt) {
-        // Menangani klik pada profilelabel
         DashboardForm dashboardForm = (DashboardForm) SwingUtilities.getWindowAncestor(this);
         ProfileForm profileForm = new ProfileForm(username, dashboardForm);
-
-        // Make the DashboardForm and ProfileForm invisible
+        
         dashboardForm.setVisible(true);
         profileForm.setVisible(true);
     }

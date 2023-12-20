@@ -28,6 +28,7 @@ public class ProfileForm extends JFrame {
         initComponents();
         setIconImage();
         setResizable(false);
+        
         this.dashboardForm = dashboardForm;
         this.username = username;
         usernamelabel.setText("Nama: " + username);
@@ -36,7 +37,7 @@ public class ProfileForm extends JFrame {
         int totalattempt = databaseHandler.getTotalTests(userId);
         int scoreshow = databaseHandler.getHighScore(userId);
         attemptlabel.setText("Jumlah Tes: " + totalattempt);
-        scorelabel.setText("Skor Maksimum: " + scoreshow);
+        scorelabel.setText("Skor Sebelumnya: " + scoreshow);
         passwordlabel.setText("Kata Sandi: " + pass);
     }
 
@@ -47,7 +48,7 @@ public class ProfileForm extends JFrame {
         scorelabel = new JLabel();
         attemptlabel = new JLabel();
         logoutbtn = new JButton();
-        ubahbtn = new JButton("Ubah"); // Button to initiate changes
+        ubahbtn = new JButton("Ubah");
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new Color(255, 255, 255));
@@ -140,34 +141,25 @@ public class ProfileForm extends JFrame {
         int option = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?", "Logout", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             this.dispose();
-            // Call the logout method of DashboardForm
             dashboardForm.logout();
         }
     }
 
     private void ubahbtnActionPerformed(ActionEvent evt) {
-        // Get the current password from the database
         String currentPassword = databaseHandler.getPassInfo(username);
-
-        // Show a dialog to allow the user to enter the new username and password
         String newUsername = JOptionPane.showInputDialog(this, "Masukkan username baru:");
         String newPassword = JOptionPane.showInputDialog(this, "Masukkan password baru:");
 
-        // Perform validation and update database
         if (newUsername != null && newPassword != null && !newPassword.equals(currentPassword)) {
-            // Update the user info in the database
             int userId = databaseHandler.fetchUserId(username);
             databaseHandler.updateUserInfo(userId, newUsername, newPassword);
 
-            // Update the UI components
             usernamelabel.setText("Nama: " + newUsername);
             passwordlabel.setText("Password: " + newPassword);
 
-            // Set ubahbtn back to visible and submitbtn back to invisible
             ubahbtn.setVisible(true);
         } else if (newPassword != null && newPassword.equals(currentPassword)) {
-            JOptionPane.showMessageDialog(this, "Password baru tidak boleh sama dengan password sebelumnya!",
-                    "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Password baru tidak boleh sama dengan password sebelumnya!","Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
 
