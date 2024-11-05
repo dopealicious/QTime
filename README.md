@@ -1,15 +1,4 @@
 # QTime Quiz Application
-Project PBO 2023
-
-Members:
-
-- Anandi Neina Aeyska Mahdi
-
-- Baiq Soraya Aprilia Monica
-
-- Islam Anasta Irawan
-
-- Lalu Mischa Khalqin Adhiguna
 
 ## Deskripsi
 QTime Quiz adalah aplikasi interaktif yang memungkinkan pengguna untuk membuat akun, masuk, dan mengikuti kuis. Aplikasi ini dilengkapi dengan fitur timer pada setiap kuis, melihat profil pengguna, mengubah informasi akun, melihat hasil kuis sebelumnya, dan memulai kuis baru. 
